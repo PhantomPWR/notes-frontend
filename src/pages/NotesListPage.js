@@ -12,7 +12,7 @@ function NotesListPage() {
     }, [])
 
     const getNotes = async () => {
-       let response = await fetch('http://localhost:8000/api/notes/')
+       let response = await fetch('/api/notes/')
        let data = await response.json()
        console.log(data)
        setNotes(data)

@@ -17,50 +17,47 @@ const NotePage = () => {
 
     const getNote = async () => {
         if (noteId === 'new') return
-        const response = await fetch(`http://localhost:8001/notes/${noteId}`)
-        const data = await response.json()
+        let response = await fetch(`/api/notes/${noteId}`)
+        let data = await response.json()
         setNote(data)
     }
 
     const createNote = async () => {
-        await fetch(`http://localhost:8001/notes/`, {
+        fetch(`/api/notes/create/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            // body: JSON.stringify(note)  // django will update the 'updated' date automatically
-            body: JSON.stringify({...note, 'updated': new Date()})  // manually update 'updated' date temporarily
+            body: JSON.stringify(note)  // django will update the 'updated' date automatically
         })
     }
 
-    const updateNote = async () => {
-        await fetch(`http://localhost:8001/notes/${noteId}`, {
+    let updateNote = async () => {
+        fetch(`/api/notes/${noteId}/update/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            // body: JSON.stringify(note)  // django will update the 'updated' date automatically
-            body: JSON.stringify({...note, 'updated': new Date()})  // manually update 'updated' date temporarily
+            body: JSON.stringify(note)  // django will update the 'updated' date automatically
         })
     }
 
-    const deleteNote = async () => {
-        await fetch(`http://localhost:8001/notes/${noteId}`, {
+    let deleteNote = async () => {
+        fetch(`/api/notes/${noteId}/delete/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(note)
         })
         navigate('/')
     }
 
-    const handleSubmit = () => {
+    let handleSubmit = () => {
         if (noteId !== "new" && !note.body) {
             deleteNote()
         } else if (noteId !== "new") {
             updateNote()
-        } else if (noteId === 'new' && note !== null) {
+        } else if (noteId === 'new' && note.body !== null) {
             createNote()
         }
         navigate('/')

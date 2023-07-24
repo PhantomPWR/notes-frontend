@@ -6,7 +6,7 @@ let getDate = (note) => {
 }
 
 let getTitle = (note) => {
-    const title = note.body.split('\n')[0]
+    let title = note.body.split('\n')[0]
     if (title.length > 45) {
         return title.slice(0, 45)
     }
